@@ -1,10 +1,12 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,13 +17,12 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname === '/') {
+      return true;
     }
-  };
+    return location.pathname === path;
+  }
 
   return (
     <header
@@ -31,28 +32,25 @@ const Header = () => {
     >
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-md bg-primary"></div>
             <span className="font-display text-xl font-bold">FinancePro</span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('home')} className="nav-link">
+            <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
               Home
-            </button>
-            <button onClick={() => scrollToSection('products')} className="nav-link">
+            </Link>
+            <Link to="/products" className={`nav-link ${isActive('/products') ? 'active' : ''}`}>
               Products
-            </button>
-            <button onClick={() => scrollToSection('services')} className="nav-link">
+            </Link>
+            <Link to="/services" className={`nav-link ${isActive('/services') ? 'active' : ''}`}>
               Services
-            </button>
-            <button onClick={() => scrollToSection('testimonials')} className="nav-link">
-              Testimonials
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="nav-link">
+            </Link>
+            <Link to="/contact" className={`nav-link ${isActive('/contact') ? 'active' : ''}`}>
               Contact
-            </button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -70,21 +68,18 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg animate-fade-in">
           <nav className="container mx-auto py-6 flex flex-col space-y-4">
-            <button onClick={() => scrollToSection('home')} className="nav-link w-full text-left px-6 py-2">
+            <Link to="/" className={`nav-link w-full text-left px-6 py-2 ${isActive('/') ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
               Home
-            </button>
-            <button onClick={() => scrollToSection('products')} className="nav-link w-full text-left px-6 py-2">
+            </Link>
+            <Link to="/products" className={`nav-link w-full text-left px-6 py-2 ${isActive('/products') ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
               Products
-            </button>
-            <button onClick={() => scrollToSection('services')} className="nav-link w-full text-left px-6 py-2">
+            </Link>
+            <Link to="/services" className={`nav-link w-full text-left px-6 py-2 ${isActive('/services') ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
               Services
-            </button>
-            <button onClick={() => scrollToSection('testimonials')} className="nav-link w-full text-left px-6 py-2">
-              Testimonials
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="nav-link w-full text-left px-6 py-2">
+            </Link>
+            <Link to="/contact" className={`nav-link w-full text-left px-6 py-2 ${isActive('/contact') ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(false)}>
               Contact
-            </button>
+            </Link>
           </nav>
         </div>
       )}
