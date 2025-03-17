@@ -1,5 +1,6 @@
 
 import { useEffect, useRef } from 'react';
+import { LightbulbIcon, TrendingUp, Shield, ArrowUpRight } from 'lucide-react';
 
 const Services = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -37,24 +38,39 @@ const Services = () => {
     {
       title: 'Financial Consulting',
       description: 'Expert guidance tailored to your specific financial needs and goals, helping you make informed decisions.',
-      image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81'
+      icon: LightbulbIcon,
+      features: [
+        { icon: ArrowUpRight, text: 'Personalized approach' },
+        { icon: TrendingUp, text: 'Expert team of advisors' },
+        { icon: Shield, text: 'Data-driven strategies' }
+      ]
     },
     {
       title: 'Wealth Management',
       description: 'Comprehensive wealth management services to grow and protect your assets for generations to come.',
-      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b'
+      icon: TrendingUp,
+      features: [
+        { icon: ArrowUpRight, text: 'Long-term growth planning' },
+        { icon: TrendingUp, text: 'Risk-adjusted strategies' },
+        { icon: Shield, text: 'Portfolio diversification' }
+      ]
     },
     {
       title: 'Tax Planning',
       description: 'Strategic tax planning to minimize liabilities and maximize returns through legal optimization strategies.',
-      image: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334'
+      icon: Shield,
+      features: [
+        { icon: ArrowUpRight, text: 'Tax optimization' },
+        { icon: TrendingUp, text: 'Compliance management' },
+        { icon: Shield, text: 'Future planning' }
+      ]
     }
   ];
 
   return (
     <section id="services" className="section" ref={sectionRef}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-on-scroll">
+        <div className="text-center mb-10 animate-on-scroll">
           <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
             Our Services
           </div>
@@ -64,43 +80,31 @@ const Services = () => {
           </p>
         </div>
         
-        <div className="space-y-24">
+        <div className="space-y-12">
           {services.map((service, index) => (
             <div 
               key={index}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center animate-on-scroll ${
-                index % 2 === 1 ? 'lg:grid-flow-dense' : ''
-              }`}
+              className="card-glass p-8 animate-on-scroll"
             >
-              <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                <h3 className="heading-md mb-4">{service.title}</h3>
-                <p className="text-muted-foreground text-lg mb-6">{service.description}</p>
-                <ul className="space-y-3">
-                  <li className="flex items-center space-x-3">
-                    <div className="h-2 w-2 rounded-full bg-primary"></div>
-                    <span>Personalized approach</span>
-                  </li>
-                  <li className="flex items-center space-x-3">
-                    <div className="h-2 w-2 rounded-full bg-primary"></div>
-                    <span>Expert team of advisors</span>
-                  </li>
-                  <li className="flex items-center space-x-3">
-                    <div className="h-2 w-2 rounded-full bg-primary"></div>
-                    <span>Data-driven strategies</span>
-                  </li>
-                </ul>
-                <button className="btn-secondary mt-8">Learn More</button>
-              </div>
-              <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                <div className="card-glass overflow-hidden h-[300px] sm:h-[400px]">
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    loading="lazy"
-                  />
+              <div className="flex items-center mb-4">
+                <div className="bg-primary/10 p-3 rounded-full mr-4">
+                  <service.icon className="text-primary h-6 w-6" />
                 </div>
+                <h3 className="heading-md">{service.title}</h3>
               </div>
+              
+              <p className="text-muted-foreground text-lg mb-6">{service.description}</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {service.features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-center p-4 bg-background/50 rounded-lg hover:bg-background/80 transition-colors">
+                    <feature.icon className="h-5 w-5 text-primary mr-3" />
+                    <span className="font-medium">{feature.text}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <button className="btn-secondary mt-6">Learn More</button>
             </div>
           ))}
         </div>

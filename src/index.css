@@ -97,7 +97,7 @@
   }
 
   .section {
-    @apply py-16 md:py-24 overflow-hidden;
+    @apply py-10 md:py-16 overflow-hidden;
   }
 
   .heading-xl {
